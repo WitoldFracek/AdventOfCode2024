@@ -1,6 +1,7 @@
 from qwlist import Lazy, QList
 from utils import read_lines
 from typing import Tuple
+from collections import Counter
 
 
 def collect_numbers(acc: Tuple[QList[int], QList[int]], pair: Tuple[int, int]) -> Tuple[QList[int], QList[int]]:
@@ -12,7 +13,7 @@ def collect_numbers(acc: Tuple[QList[int], QList[int]], pair: Tuple[int, int]) -
 
 def sol_a() -> int:
     left, right = (
-        Lazy(read_lines(1))
+        Lazy(read_lines('./input.txt'))
         .map(lambda line: line.split(' '))
         .map(lambda x: (int(x[0]), int(x[-1])))
         .fold(collect_numbers, (QList(), QList()))
@@ -25,8 +26,21 @@ def sol_a() -> int:
         .sum()
     )
 
+
 def sol_b() -> int:
-    return -1
+    left, right = (
+        Lazy(read_lines('./input.txt'))
+        .map(lambda line: line.split(' '))
+        .map(lambda x: (int(x[0]), int(x[-1])))
+        .fold(collect_numbers, (QList(), QList()))
+    )
+    occurrences = Counter(right)
+    return (
+        left
+        .map(lambda n: n * occurrences.get(n, 0))
+        .sum()
+    )
+
 
 def main():
     print(f'Solution a: {sol_a()}')
