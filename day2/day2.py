@@ -16,8 +16,6 @@ def is_correct_seq(seq: QList[int]) -> bool:
 
 
 def is_correct_with_removal(seq: QList[int]) -> bool:
-    if is_correct_seq(seq):
-        return True
     fix_batches = (
         seq
         .window(3)
@@ -25,6 +23,8 @@ def is_correct_with_removal(seq: QList[int]) -> bool:
         .batch_by(lambda x: x)
         .collect()
     )
+    if fix_batches.len() == 1 and fix_batches[0][0]:
+        return True
     if fix_batches.len() == 2:
         left, right = fix_batches
         if not left[0] and left.len() == 1:
@@ -34,6 +34,16 @@ def is_correct_with_removal(seq: QList[int]) -> bool:
     if fix_batches.len() == 3:
         _, mid, _ = fix_batches
         if not mid[0] and mid.len() < 4:
+            return True
+    return False
+
+
+def is_correct_with_removal_brute(seq: QList[int]) -> bool:
+    if is_correct_seq(seq):
+        return True
+    for i in range(seq.len()):
+        sub = QList(seq[:i] + seq[i+1:])
+        if is_correct_seq(sub):
             return True
     return False
 

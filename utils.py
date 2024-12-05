@@ -1,4 +1,3 @@
-from idlelib.iomenu import encoding
 from typing import Generator
 from pathlib import Path
 import os
