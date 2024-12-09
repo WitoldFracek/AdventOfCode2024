@@ -9,7 +9,7 @@ def read_lines(path: str | Path) -> Generator[str, None, None]:
 
 
 if __name__ == '__main__':
-    DAY = 4
+    DAY = 5
     os.mkdir(f'./day{DAY}')
     with open(f'./day{DAY}/day{DAY}.py', 'w+', encoding='utf-8') as file:
         pass
