@@ -20,8 +20,26 @@ def sol_a() -> int:
     )
 
 
+def append_command(acc: Tuple[bool, QList[str]], command) -> Tuple[bool, QList[str]]:
+    do, xs = acc
+    if command == 'do()':
+        return True, xs
+    if command == 'don\'t()':
+        return False, xs
+    if do:
+        xs.append(command)
+    return do, xs
+
+
 def sol_b() -> int:
-    return -1
+    data = ''.join(read_lines('./input.txt'))
+    return (
+        Lazy(re.findall(r'mul\([1-9]\d{0,2},[1-9]\d{0,2}\)|do\(\)|don\'t\(\)', data))
+        .fold(append_command, (True, QList()))[1]
+        .map(parse_tuple)
+        .map(lambda pair: pair[0] * pair[1])
+        .sum()
+    )
 
 
 def main():
