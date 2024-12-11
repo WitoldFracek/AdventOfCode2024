@@ -67,7 +67,7 @@ class Option(Generic[T]):
 
 
 if __name__ == '__main__':
-    DAY = 6
+    DAY = 7
     os.mkdir(f'./day{DAY}')
     with open(f'./day{DAY}/day{DAY}.py', 'w+', encoding='utf-8') as file:
         pass
