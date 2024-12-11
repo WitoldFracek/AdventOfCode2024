@@ -54,12 +54,8 @@ def move(board: Board, x: int, y: int, direction: str) -> Option[DataA]:
     dx, dy = deltas(direction)
     new_x = x + dx
     new_y = y + dy
-    row = board.get(new_x)
     board[x][y] = 'X'
-    if row is None:
-        return Option.none()
-    c = row.get(new_y)
-    if c is None:
+    if (c := board.get(new_x, QList()).get(new_y)) is None:
         return Option.none()
     if c == '#':
         return Option.some((x, y, rotate(direction)))
