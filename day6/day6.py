@@ -51,19 +51,14 @@ def neighbour(board: Board, x: int, y: int, direction: str) -> Option[Cell]:
 
 
 def move(board: Board, x: int, y: int, direction: str) -> Option[DataA]:
+    board[x][y] = 'X'
     dx, dy = deltas(direction)
     new_x = x + dx
     new_y = y + dy
-    row = board.get(new_x)
-    board[x][y] = 'X'
-    if row is None:
-        return Option.none()
-    c = row.get(new_y)
-    if c is None:
-        return Option.none()
-    if c == '#':
-        return Option.some((x, y, rotate(direction)))
-    return Option.some((new_x, new_y, direction))
+    return (
+        Option.wrap(board.get(new_x, QList()).get(new_y))
+        .map(lambda v: (x, y, rotate(direction)) if v == '#' else (new_x, new_y, direction))
+    )
 
 def move_b(board: Board, x: int, y: int, direction: str, obstacles: Set[Tuple[int, int]]) -> Option[DataB]:
     board[x][y].add(direction)
