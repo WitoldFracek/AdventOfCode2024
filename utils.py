@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import Generator
 from pathlib import Path
 import os
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Tuple
 
 T = TypeVar('T')
 K = TypeVar('K')
@@ -12,6 +12,15 @@ def read_lines(path: str | Path) -> Generator[str, None, None]:
     with open(path, 'r', encoding='utf8') as file:
         for line in file:
             yield line.strip()
+
+
+def fst(pair: Tuple[T, K]) -> T:
+    return pair[0]
+
+
+def snd(pair: Tuple[T, K]) -> K:
+    return pair[1]
+
 
 class Option(Generic[T]):
     __GUARD = object()
@@ -67,7 +76,7 @@ class Option(Generic[T]):
 
 
 if __name__ == '__main__':
-    DAY = 8
+    DAY = 9
     os.mkdir(f'./day{DAY}')
     with open(f'./day{DAY}/day{DAY}.py', 'w+', encoding='utf-8') as file:
         pass
